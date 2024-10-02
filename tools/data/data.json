@@ -1,0 +1,18 @@
+{
+    "molecules": [
+        {
+            "name": "Template",
+            "diameter": "(float) particle diameter in Angstroms",
+            "citation": "(str) Seperate multiple citations with '|' ",
+            "pressure": "(float) Pressure inflicted on the IOR sample",
+            "temperature": "(float) Temperature of the IOR sample in Kelvins"
+        },
+        {
+            "name": "H2O",
+            "diameter": 2.68,
+            "citation": "G. M. Hale and M. R. Querry. Optical constants of water in the 200-nm to 200-µm wavelength region, Appl. Opt. 12, 555-563 (1973)",
+            "pressure": 1013.25,
+            "temperature": 298.15
+        }
+    ]
+}
