@@ -12,7 +12,7 @@
  
 
 I will be attempting to answer these questions through a number of tools:
-- generate_lut.py (alongside tools\data\) will generate look up tables of phase functions from Mie Theory using miepython.
+- generate_lut.py (alongside tools\data\\) will generate look up tables of phase functions from Mie Theory using miepython.
 - lut_visualzie.py will allow me to easily determine that generate_lut is successful within a reasonable amount of accuracy.
 - phase_modifier.py will investigate various methods of decreasing noise, such as chopping the diffraction spike off of high-anistropic phase functions like those of water droplets in clouds or rain.
 - bounce.py will analyze behavior as light diffuses, using a monte-carlo method and a render buffer that accumulates every individual bounce within a volume. Later I will include more tests related to densitiy changes and surface effects.
