@@ -3,12 +3,19 @@
  This project is currently not complete. Its goals are to answer the following questions:
  
  How does the phase function change the rate at which the light becomes isotropic (diffuses) within a volume?
+ 
  How does this rate of diffusion or pattern of diffusion change when a low or high density section of the volume is present?
+ 
  How does this diffusion change based on the geometry of a nearby surface?
+ 
  Is there a way to approximate multiple scattering based off of how bounces become diffuse?
+ 
  Does an approximation exist for a multiple-scattering volume that also acts as a heterogenous medium (including emission, absorption, etc)?
+ 
  How can phase functions be modified to become more efficient to use with a Monte-Carlo path tracer?
+ 
  Is the index of refraction of an atmospheric medium important for the visual quality of a planetary atmosphere (using a rayleigh phase function accounting for this medium IOR)?
+ 
 
 I will be attempting to answer these questions through a number of tools:
 - generate_lut.py (alongside tools\data\) will generate look up tables of phase functions from Mie Theory using miepython.
