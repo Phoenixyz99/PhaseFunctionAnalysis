@@ -1,5 +1,5 @@
 # PhaseFunctionAnalysis
- A collection of python tools to create and analyze phase function LUTs for the scattering of visible light.
+ A collection of python tools to create and analyze phase functions for the scattering of visible light.
  This project is currently not complete. Its goals are to answer the following questions:
  
  - How does the phase function change the rate at which the light becomes isotropic (diffuses) within a volume?
@@ -10,7 +10,6 @@
  - How can phase functions be modified to become more efficient to use with a Monte-Carlo path tracer?
  - Is the index of refraction of an atmospheric medium important for the visual quality of a planetary atmosphere (using a rayleigh phase function accounting for this medium IOR)?
  
-
 I will be attempting to answer these questions through a number of tools:
 - generate_lut.py (alongside tools\data\\) will generate look up tables of phase functions from Mie Theory using miepython.
 - lut_visualize.py will allow me to easily determine that generate_lut is successful within a reasonable amount of accuracy.
