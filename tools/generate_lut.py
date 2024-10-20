@@ -110,7 +110,7 @@ def build_arrays(settings, mode, density_block_size, ior_data):
     return radius_array, wavelength_array, ior_array, abs_array, med_ior_array, material_data
 
 
-@njit
+
 def invert_cdf(mu, cdf, xi):
 
     inverse_cdf = interpolate.interp1d(
@@ -125,7 +125,7 @@ def invert_cdf(mu, cdf, xi):
     return mu_values
 
 
-@njit
+
 def importance_integral(mu, pdf):
     sorted_mu = np.argsort(mu)
     mu_sorted = mu[sorted_mu]
@@ -142,7 +142,7 @@ def importance_integral(mu, pdf):
     return cdf_array
 
 
-@njit
+
 def mie_theory(settings, complex_ior, med_ior, radius, wavelength):
 
     diameter = radius * 2
@@ -156,7 +156,7 @@ def mie_theory(settings, complex_ior, med_ior, radius, wavelength):
     return probability_distribution, theta, (qext, qscat, qback, g)
 
 
-@njit
+
 def process_wavelengths(args):
     settings, aux, radius, wavelength_array_list, ior_array_list, abs_array_list, medium_ior = args
 
