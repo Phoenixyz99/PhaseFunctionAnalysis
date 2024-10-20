@@ -1,18 +1,15 @@
 {
     "molecules": [
         {
-            "name": "Template",
-            "diameter": "(float) particle diameter in Angstroms",
-            "citation": "(str) Seperate multiple citations with '|' ",
-            "pressure": "(float) Pressure inflicted on the IOR sample",
-            "temperature": "(float) Temperature of the IOR sample in Kelvins"
+            "name": "H2O",
+            "citation": "G. M. Hale and M. R. Querry. Optical constants of water in the 200-nm to 200-um wavelength region, Appl. Opt. 12, 555-563 (1973) | M. N. Polyanskiy. Refractiveindex.info database of optical constants. Sci. Data 11, 94 (2024) https://doi.org/10.1038/s41597-023-02898-2",
+            "ndensity": 33.3679E+27
         },
         {
-            "name": "H2O",
-            "diameter": 2.68,
-            "citation": "G. M. Hale and M. R. Querry. Optical constants of water in the 200-nm to 200-µm wavelength region, Appl. Opt. 12, 555-563 (1973)",
-            "pressure": 1013.25,
-            "temperature": 298.15
+            "name": "N2",
+            "citation": "E. R. Peck and B. N. Khanna. Dispersion of nitrogen, J. Opt. Soc. Am. 56, 1059-1063 (1966) | M. N. Polyanskiy. Refractiveindex.info database of optical constants. Sci. Data 11, 94 (2024) https://doi.org/10.1038/s41597-023-02898-2",
+            "pressure":101325,
+            "temperature": 273.15
         }
     ]
 }

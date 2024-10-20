@@ -1,0 +1,80 @@
+{
+    "lut_gen":
+    {
+        "droplet_mode":
+        {
+            "fast":
+            {
+                "epsilon": 1E-6,
+                "starting_med_ior": 1.0,
+                "ending_med_ior": 1.0,
+                "med_ior_rows": 1,
+                "med_ior_scale": 2.5,
+                "starting_size": 1E-5,
+                "ending_size": 5E-3,
+                "size_scale": 2.5,
+                "angle_count": 7200,
+                "column_count": 3600,
+                "wavelength_count": 100,
+                "normalization": "scat",
+                "aux_columns": "ext, scat",
+                "generate_cdf": "True",
+                "rows": 50
+            },
+            "default":
+            {
+                "epsilon": 1E-6,
+                "starting_med_ior": 1.0,
+                "ending_med_ior": 1.004,
+                "med_ior_rows": 10,
+                "med_ior_scale": 2.5,
+                "starting_size": 1E-5,
+                "ending_size": 5E-3,
+                "size_scale": 2.5,
+                "angle_count": 7200,
+                "column_count": 3600,
+                "wavelength_count": 500,
+                "normalization": "scat",
+                "aux_columns": "ext, scat",
+                "generate_cdf": "True"
+            }
+        },
+        "molecule_mode":
+        {
+            "fast":
+            {
+                "epsilon": 1E-6,
+                "starting_med_ior": 1.0,
+                "ending_med_ior": 1.0,
+                "med_ior_rows": 1,
+                "med_ior_scale": 2.5,
+                "starting_ndensity": 1E+10,
+                "ending_ndensity": 1E+27,
+                "ndensity_scale": 2.5,
+                "angle_count": 360,
+                "column_count": 360,
+                "wavelength_count": 100,
+                "normalization": "scat",
+                "aux_columns": "ext, scat",
+                "generate_cdf": "True"
+            },
+            "default":
+            {
+                "epsilon": 1E-6,
+                "starting_med_ior": 1.0,
+                "ending_med_ior": 1.004,
+                "med_ior_rows": 10,
+                "med_ior_scale": 2.5,
+                "starting_ndensity": 1E+10,
+                "ending_ndensity": 1E+27,
+                "ndensity_scale": 2.5,
+                "angle_count": 7200,
+                "column_count": 3600,
+                "wavelength_count": 1000,
+                "normalization": "scat",
+                "aux_columns": "ext, scat",
+                "generate_cdf": "True"
+            }
+        }
+    }
+}
