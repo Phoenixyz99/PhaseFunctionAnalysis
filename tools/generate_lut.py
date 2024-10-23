@@ -1,31 +1,21 @@
-# Generate phase LUT and CDF-1 LUT
-# Take mie at molecule ior, generate an image LUT in an EXR, where each column is an angle, and each row is a molecule size (for droplets) or differing IOR (from Lorentz-Lorenz)
-# See importance.py under \OLD\ for CDF-1
-
-# Two modes: Droplet mode, molecule mode
-# Metadata:
-# Mode, min and max parameters, molecule data
-# Format: 1800 angles + Absorption cross section + Scattering cross section + Extinction coefficient
-# Changeable format to allow for phase to be phase + cross section * 4pi or phase + absorption cross section, etc.
-
-# Take IOR, extrapolar/interpolate
-# Find number density. For gas, get pressure and temperature. For solid/liquid, density and molar mass. Give users an option.
-# Find polarizability. Solve loretnz-Lorenz for polarizability using given ior data.
-# Use Lorentz-Lorenz to find the resulting n for a new number density.
-# Medium IOR and number density changes per row. 
-
 from .data import read
 import numpy as np
 from ColorLib import cieobserver, output
 from scipy import interpolate, constants
-from scipy.integrate import cumulative_trapezoid
+from scipy.integrate import cumulative_simpson
 import miepython
 from tqdm import tqdm
 from multiprocessing import Pool, cpu_count
 import matplotlib.pyplot as plt
 import os
 from datetime import datetime
-from numba import njit
+
+# TODO: Move everything over to a "generate.py" and two files: one for generating the mie LUT and one for the CDF
+# TODO: Then, you can start on the mie chopper that chops off diffraction peaks.
+# TODO: For chopper: Identify areas of signifigant spikes (difference between minimum and local maximums).
+# TODO: Then, take the average rate of change of the last area of angle n, and then extrapolate that slope in a linear approximation.
+# TODO: Compute the difference in the fraction of the energy between the old version and the new version. Ensure you normalize the chopped PDF.
+# TODO: Prompt the user to lower their volume density by that fraction of energy. 
 
 # More points near the end
 def base_e_out(start, end, count, scale=2.5):
@@ -126,12 +116,13 @@ def invert_cdf(mu, cdf, xi):
 
 
 
-def importance_integral(mu, pdf):
-    sorted_mu = np.argsort(mu)
-    mu_sorted = mu[sorted_mu]
-    pdf_sorted = pdf[sorted_mu]
+def importance_integral(theta, pdf): # NOTE: High anisotropic functions will not have a high enough resolution to sample correctly, unless you set the image size to 18 * 10^5+
+    norm_pdf = pdf / np.sum(pdf)
+    sorted_mu = np.argsort(theta)
+    mu_sorted = theta[sorted_mu]
+    pdf_sorted = norm_pdf[sorted_mu]
 
-    cdf_array = cumulative_trapezoid(pdf_sorted, mu_sorted, initial=0)
+    cdf_array = cumulative_simpson(pdf_sorted, x=mu_sorted, initial=0)
     cdf_array /= cdf_array[-1]
 
     # Pre-computing inversion means the loss of the potential for detail in areas of interest as the water phase function is
@@ -154,7 +145,6 @@ def mie_theory(settings, complex_ior, med_ior, radius, wavelength):
     qext, qscat, qback, g = miepython.ez_mie(complex_ior, diameter, wavelength, med_ior)
     
     return probability_distribution, theta, (qext, qscat, qback, g)
-
 
 
 def process_wavelengths(args):
@@ -215,7 +205,7 @@ def process_wavelengths(args):
     # Calculate the probability of light that is red, green, or blue to scatter at a certain angle.
     if settings['generate_cdf'] == "True":
         for i in range(3): # The left side of the image is xi = 0, the right side is xi = 1
-            rgb_cdf[:, i] = importance_integral(np.cos(np.linspace(0, np.pi, settings['angle_count'])), np.clip(rgb_pdf[:, i], 0, 1))
+            rgb_cdf[:, i] = importance_integral(np.cos(np.linspace(0, np.pi, settings['angle_count'])), rgb_pdf[:, i])
 
     return rgb_phase, rgb_cdf, rgb_cross
 

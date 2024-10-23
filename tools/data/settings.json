@@ -15,11 +15,11 @@
                 "size_scale": 2.5,
                 "angle_count": 7200,
                 "column_count": 3600,
-                "wavelength_count": 100,
+                "wavelength_count": 25,
                 "normalization": "scat",
                 "aux_columns": "ext, scat",
                 "generate_cdf": "True",
-                "rows": 50
+                "rows": 10
             },
             "default":
             {
