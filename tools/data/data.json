@@ -10,6 +10,12 @@
             "citation": "E. R. Peck and B. N. Khanna. Dispersion of nitrogen, J. Opt. Soc. Am. 56, 1059-1063 (1966) | M. N. Polyanskiy. Refractiveindex.info database of optical constants. Sci. Data 11, 94 (2024) https://doi.org/10.1038/s41597-023-02898-2",
             "pressure":101325,
             "temperature": 273.15
+        },
+        {
+            "name": "Ar",
+            "citation": "A. Bideau-Mehu, Y. Guern, R. Abjean, A. Johannin-Gilles. Measurement of refractive indices of neon, argon, krypton and xenon in the 253.7-140.4 nm wavelength range. Dispersion relations and estimated oscillator strengths of the resonance lines. J. Quant. Spectrosc. Rad. Transfer 25, 395-402 (1981) | T. Larsén. Beitrag zur Dispersion der Edelgase. Z. Physik 88, 389-394 (1934)",
+            "pressure": 101325,
+            "temperature": 273.15
         }
     ]
 }

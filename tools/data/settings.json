@@ -10,15 +10,14 @@
                 "ending_med_ior": 1.0,
                 "med_ior_rows": 1,
                 "med_ior_scale": 2.5,
-                "starting_size": 1E-5,
-                "ending_size": 5E-3,
+                "starting_radius": 2E-6,
+                "ending_radius": 3E-3,
                 "size_scale": 2.5,
-                "angle_count": 7200,
+                "angle_count": 3600,
                 "column_count": 3600,
                 "wavelength_count": 25,
                 "normalization": "scat",
                 "aux_columns": "ext, scat",
-                "generate_cdf": "True",
                 "rows": 10
             },
             "default":
@@ -28,15 +27,14 @@
                 "ending_med_ior": 1.004,
                 "med_ior_rows": 10,
                 "med_ior_scale": 2.5,
-                "starting_size": 1E-5,
-                "ending_size": 5E-3,
+                "starting_radius": 1E-5,
+                "ending_radius": 5E-3,
                 "size_scale": 2.5,
-                "angle_count": 7200,
+                "angle_count": 3600,
                 "column_count": 3600,
                 "wavelength_count": 500,
                 "normalization": "scat",
-                "aux_columns": "ext, scat",
-                "generate_cdf": "True"
+                "aux_columns": "ext, scat"
             }
         },
         "molecule_mode":
@@ -55,8 +53,7 @@
                 "column_count": 360,
                 "wavelength_count": 100,
                 "normalization": "scat",
-                "aux_columns": "ext, scat",
-                "generate_cdf": "True"
+                "aux_columns": "ext, scat"
             },
             "default":
             {
@@ -68,12 +65,11 @@
                 "starting_ndensity": 1E+10,
                 "ending_ndensity": 1E+27,
                 "ndensity_scale": 2.5,
-                "angle_count": 7200,
+                "angle_count": 3600,
                 "column_count": 3600,
                 "wavelength_count": 1000,
                 "normalization": "scat",
-                "aux_columns": "ext, scat",
-                "generate_cdf": "True"
+                "aux_columns": "ext, scat"
             }
         }
     }

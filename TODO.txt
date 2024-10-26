@@ -1,0 +1,47 @@
+generate lut [molecule] [-p Profilename] [-d -m]
+generate modify [molecule] [-n/-c file] [-d or -m] [-t {chop, integrate}] [-p params] [-f flavor]
+generate cdf [molecule] [-n/-c file] [-d or -m] [-f flavor]
+
+generate lut H2O -p fast -d
+generate modify H2O -c 2 -d -t chop -p 2, 2 -f Phase
+generate cdf H2O -c 1 -d -f Chopped_Phase
+
+
+File types:
+-n File name input
+-c Creation date in integer
+
+-f Flavor: Phase, Chopped_Phase, CDF, Integrated_{Phase/Chopped_Phase}
+-t Tool: Chop, Integrate
+
+Modes:
+-d Droplet Mode
+-m Molecule Mode
+
+Params:
+- Chop [Peak width, Second derivative degree length]
+- Integrate [Light source radius in degrees]
+
+
+
+For file: Filename is prefixed with f:, or the closest to top (1 for latest, 2 for second latest, etc.)
+
+lut_utils
+- Read LUTs
+
+generate_lut
+- Handles interfacing with util and mie
+
+phase_creator
+- Mie Theory
+- Generate CDF
+- Generate Chopped
+
+
+
+
+
+length = 1800
+degree = 10
+peak_degrees = 180 [10 * 10
+peak_index = 180 - 1

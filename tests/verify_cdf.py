@@ -4,6 +4,14 @@ import matplotlib.pyplot as plt
 from ColorLib import output
 from pathlib import Path
 import multiprocessing as mp
+import sys
+import pathlib
+
+current_dir = Path(__file__).parent
+tools_path = current_dir.parent / 'tools'
+sys.path.append(str(tools_path))
+
+import lut_utils as utils
 
 # Function for parallelized sampling
 def parallel_sampling(args):
@@ -30,37 +38,23 @@ def parallel_sampling(args):
     return sampled_mu
 
 if __name__ == "__main__":
-    # File path setup
-    current_dir = Path(__file__).parent
-    path = current_dir.parent / 'output' / 'H2O' / 'droplet_mode'
-    phase_path = path / 'Phase_2024-10-22_01-26-04.exr'
-    cdf_path = path / 'CDF_2024-10-22_01-26-04.exr'
-    phase = output.read_exr(str(phase_path))
-    cdf = output.read_exr(str(cdf_path))
 
-    # Pre-process the data
-    height, width, _ = phase.shape
-    cross_section = phase[3, width - 2, :]  # Extracting a slice
+    cdf, _, _, _, _ = utils.read_lut("H2O", "droplet_mode", "CDF", 1)
+    print(cdf.shape)
+    print("Done")
+    _, _, pdf, _, _ = utils.read_lut("H2O", "droplet_mode", "Chopped_Phase", 1)
+    print(pdf.shape)
 
-    # Ensure no division by zero by adding a small value if necessary
-    cross_section = np.where(cross_section == 0, 1e-6, cross_section)
+    cdf = cdf[49]
+    pdf = pdf[49]
 
-    pdf = phase / cross_section.reshape(1, 1, 3)  # Normalize phase by cross_section
-    pdf = pdf[3, :, :]  # Picking the slice along height=3
-    pdf = pdf[:-2, :]  # Exclude some values at the end
-
-    cdf = cdf[3, :, :]  # Picking the slice for CDF
-    cdf = cdf[1:-1, :]  # Exclude some boundary values
     mu = np.linspace(0, np.pi, len(cdf))  # Create mu array
-
-    # Normalize CDF between 0 and 1
-    cdf_normalized = (cdf - np.min(cdf, axis=0)) / (np.max(cdf, axis=0) - np.min(cdf, axis=0))
 
     # Initialize lists to store processed data
     mu_arrays = []
 
     for i in range(3):
-        cdf_channel = cdf_normalized[:, i]
+        cdf_channel = cdf[:, i]
         mu_channel = mu.copy()
         
         # Sort cdf_channel, mu_channel, and pdf_channel together
@@ -69,7 +63,7 @@ if __name__ == "__main__":
         mu_arrays.append(mu_channel_sorted)
 
     # Prepare data to pass to parallel processes
-    args = (mu_arrays, cdf_normalized)
+    args = (mu_arrays, cdf)
 
     # Use multiprocessing to generate samples
     with mp.Pool(mp.cpu_count()) as pool:
@@ -86,8 +80,8 @@ if __name__ == "__main__":
     bins = np.linspace(0, np.pi, len(mu_selected))
     histogram_estimated_pdf, bin_edges = np.histogram(sampled_mu[:, 0], bins=bins, density=True)
 
-    # Normalize histogram to create an estimated PDF
-    histogram_estimated_pdf /= np.sum(histogram_estimated_pdf) * (bins[1] - bins[0])
+    # Normalize the histogram to match the original PDF area under the curve
+    histogram_estimated_pdf *= np.sum(pdf_selected) * (bins[1] - bins[0])
 
     # Compute the bin centers for the histogram to align with PDF
     bin_centers = 0.5 * (bin_edges[:-1] + bin_edges[1:])
@@ -115,6 +109,8 @@ if __name__ == "__main__":
 
     # Compute and plot the difference between the PDFs
     difference = np.abs(pdf_selected[:len(histogram_estimated_pdf)] - histogram_estimated_pdf)
+
+    ax2.set_yscale('log')
 
     # Plot the difference
     ax2.plot(bin_centers_flipped, difference, label='Difference', color='green', linewidth=2)
