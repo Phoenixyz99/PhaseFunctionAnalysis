@@ -1,4 +1,4 @@
-import lut_utils as utils
+import tools.lut_utils as utils
 import ColorLib.output as output
 import numpy as np
 
@@ -9,8 +9,16 @@ import numpy as np
 # Step 4. Plot the phase function or export an EXR image based on the user's request
 
 def visualize_phase(molecule_name, mode, flavor, choice):
-    phase, custom_metadata, _, aux_columns, _ = utils.read_lut(molecule_name, mode, flavor, choice)
+    phase, settings, _, aux_columns, _ = utils.read_lut(molecule_name, mode, flavor, choice)
+    height = phase.shape[0]
+    width = phase.shape[1]
 
+    density_block_size = int(np.floor((height) / settings['med_ior_rows']))
+
+    if 'rows' in settings:
+        density_block_size = settings['rows'] # Row override
+
+    
     # phase = (H, W, (R, G, B)) ###MAIN IMAGE
     # custom_metadata = dict[]
     # aux_columns = (H, W, (R, G, B))
@@ -31,8 +39,8 @@ def visualize_phase(molecule_name, mode, flavor, choice):
     phase.shape[2] # RGB (This will always be 3)
 
     #Ignore these, do not remove them
-    aux = np.array([item.strip() for item in custom_metadata['aux_columns'].split(',')])
-    image, density_block_size = utils.build_lut(custom_metadata, aux)
+    aux = np.array([item.strip() for item in settings['aux_columns'].split(',')])
+    image, density_block_size = utils.build_lut(settings, aux)
 
     density_block_size # Size of each medium IOR block (height)
 
@@ -47,6 +55,7 @@ def visualize_phase(molecule_name, mode, flavor, choice):
         
         custom_metadata['starting_radius'] # Etc.
 
+    intensity = 0
     output.plot(yaxis=intensity, xaxis=theta, xlabel="Theta", ylabel="Intensity", scale="logy")
 
     return

@@ -180,6 +180,7 @@ def image_loop(settings, ior_data, mode, molecule_name):
                 akima_interpolator = interpolate.Akima1DInterpolator(np.arange(settings['angle_count']), rgb_phase[:, b])
                 new_rgb_phase[:, b] = akima_interpolator(angle_range)
 
+            #TODO: To be refactored
             phase[(i * density_block_size) + j, -len(aux):, :] = rgb_aux
             phase[(i * density_block_size) + j, :-len(aux), :] = new_rgb_phase
 
@@ -192,6 +193,7 @@ def image_loop(settings, ior_data, mode, molecule_name):
 
 def cdf_loop(flavor, mode, molecule_name, choice):
 
+    #TODO: To be refactored
     _, custom_metadata, pdf, _, _ = utils.read_lut(molecule_name, mode, flavor, choice)
 
     height, width, _ = pdf.shape
@@ -214,6 +216,7 @@ def chop_loop(mode, molecule_name, choice, params):
     if pdf is None:
         NotImplementedError("The LUT read does not feature a valid PDF or a valid PDF could not be derived from auxiliary columns.")
 
+    #TODO: To be refactored
     height, width, _ = phase.shape
     ratio = np.zeros((height, 1, 3))
     for i in range(height):

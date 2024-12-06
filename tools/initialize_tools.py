@@ -1,7 +1,10 @@
 from .data import read
 from tools import generate_lut
+from tools import render
 
 # Main
+
+# TODO: Consider Removing
 
 def initialize_lut_gen(args):
 
@@ -49,6 +52,7 @@ def initialize_lut_gen(args):
     generate_lut.image_loop(settings_data[settings_profile], ior_data, mode, molecule_name)
 
     return
+
 
 
 # Aux
@@ -112,5 +116,38 @@ def initialize_aux_gen(args):
             generate_lut.chop_loop(mode, molecule_name, choice, params)
         else:
             SyntaxError(f"Tool {args.tool} not found!")
+
+    return
+
+
+def initialize_render(args):
+    
+    molecule_name = args.name
+    mode = args.mode
+    choice = args.choice
+
+    while molecule_name is None:
+        molecule_name = input("Please enter the exact molecule name (str): ")
+
+        if not isinstance(molecule_name, str):
+            print("Molecule name must be a string.")
+    
+    while mode is None:
+        if input("Would you like to evaluate molecules, rather than spheres? (Y/N): ") == "Y":
+            settings_data = settings_data['molecule_mode']
+            mode = 'molecule_mode'
+        else:
+            settings_data = settings_data['droplet_mode']
+            mode = 'droplet_mode'
+
+    while choice is None:
+        print("Please enter the exact name of the .exr file you wish to evaluate.")
+        choice = input("Or, enter an int representing the number of files since the recently created file. (1 is most recent): ")
+
+        if not isinstance(choice, str) or not isinstance(choice, int):
+            print("Invalid entry.")
+            choice = None
+
+    render.render_diffuse(mode, molecule_name, choice)
 
     return

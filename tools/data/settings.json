@@ -9,7 +9,7 @@
                 "starting_med_ior": 1.0,
                 "ending_med_ior": 1.0,
                 "med_ior_rows": 1,
-                "med_ior_scale": 2.5,
+                "med_ior_scale": 2.5,  
                 "starting_radius": 2E-6,
                 "ending_radius": 3E-3,
                 "size_scale": 2.5,
@@ -72,5 +72,9 @@
                 "aux_columns": "ext, scat"
             }
         }
+    },
+    "diffusionRenderer":
+    {
+        
     }
 }
